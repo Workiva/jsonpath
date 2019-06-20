@@ -245,7 +245,7 @@ func pathEndValue(q *query, e *Eval, i *Item) queryStateFn {
 			q.buffer.Write(i.val)
 		}
 	} else {
-		r := &Result{Keys: q.valLoc.toArray()}
+		r := &Result{PathString: q.Path.stringValue, Keys: q.valLoc.toArray()}
 		if q.buffer.Len() > 0 {
 			val := make([]byte, q.buffer.Len())
 			copy(val, q.buffer.Bytes())

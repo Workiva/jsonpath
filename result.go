@@ -15,9 +15,10 @@ const (
 )
 
 type Result struct {
-	Keys  []interface{}
-	Value []byte
-	Type  int
+	PathString string
+	Keys       []interface{}
+	Value      []byte
+	Type       int
 }
 
 func (r *Result) Pretty(showPath bool) string {
