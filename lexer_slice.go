@@ -56,8 +56,6 @@ looper:
 		if cur == '"' {
 			if previous == noValue || previous != '\\' {
 				break looper
-			} else {
-				l.take()
 			}
 		}
 

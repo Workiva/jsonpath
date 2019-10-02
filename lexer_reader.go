@@ -57,12 +57,6 @@ looper:
 		if curByte == '"' {
 			if previous != '\\' {
 				break looper
-			} else {
-				curByte, err = l.bufInput.ReadByte()
-				if err == io.EOF {
-					return errors.New("Unexpected EOF in string")
-				}
-				l.lexeme.WriteByte(curByte)
 			}
 		}
 

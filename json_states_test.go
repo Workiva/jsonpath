@@ -99,7 +99,7 @@ var examples = []string{
 	    "totally sweet scientific notation": -123.123e-2,
 	    "unicode? you betcha!": "ú™£¢∞§\u2665",
 	    "zero character": "0",
-	    "null is boring": null
+	    "null is boring": {}
 	  },
 	  {
 	    "name": "another object",

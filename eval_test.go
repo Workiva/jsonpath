@@ -15,6 +15,7 @@ type test struct {
 }
 
 var tests = []test{
+	test{`key selection with back to back quotes`, `{"aKey":"32\""}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `"32\""`, JsonString, `aKey`)}},
 	test{`key selection`, `{"aKey":32}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `32`, JsonNumber, `aKey`)}},
 	test{`nested key selection`, `{"aKey":{"bKey":32}}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `{"bKey":32}`, JsonObject, `aKey`)}},
 	test{`empty array`, `{"aKey":[]}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `[]`, JsonArray, `aKey`)}},
@@ -37,7 +38,7 @@ var tests = []test{
 	test{`index of array selection (more than one)`, `{"aKey":{"bKey":[123,456]}}`, `$.aKey.bKey[1]+`, []Result{newResult(`$.aKey.bKey[1]+`, `456`, JsonNumber, `aKey`, `bKey`, 1)}},
 	test{`multi-level object/array`, `{"1Key":{"aKey": null, "bKey":{"trash":[1,2]}, "cKey":[123,456] }, "2Key":false}`, `$.1Key.bKey.trash[0]+`, []Result{newResult(`$.1Key.bKey.trash[0]+`, `1`, JsonNumber, `1Key`, `bKey`, `trash`, 0)}},
 	test{`multi-level array`, `{"aKey":[true,false,null,{"michael":[5,6,7]}, ["s", "3"] ]}`, `$.*[*].michael[1]+`, []Result{newResult(`$.*[*].michael[1]+`, `6`, JsonNumber, `aKey`, 3, `michael`, 1)}},
-	test{`multi-level array 2`, `{"aKey":[true,false,null,{"michael":[5,6,7]}, ["s", "3"] ]}`, `$.*[*][1]+`, []Result{newResult(`$.*[*][1]+`, `"3"`, JsonString, `aKey`, 4, 1)}},
+	test{`multi-level array 2`, `{"aKey":[true,false,null,{"michael":[5,6,7]}, ["s", "3\""] ]}`, `$.*[*][1]+`, []Result{newResult(`$.*[*][1]+`, `"3\""`, JsonString, `aKey`, 4, 1)}},
 
 	test{`evaluation literal equality`, `{"items":[ {"name":"alpha", "value":11}]}`, `$.items[*]?("bravo" == "bravo").value+`, []Result{newResult(`$.items[*]?("bravo" == "bravo").value+`, `11`, JsonNumber, `items`, 0, `value`)}},
 	test{`evaluation based on string equal to path value`, `{"items":[ {"name":"alpha", "value":11}, {"name":"bravo", "value":22}, {"name":"charlie", "value":33} ]}`, `$.items[*]?(@.name == "bravo").value+`, []Result{newResult(`$.items[*]?(@.name == "bravo").value+`, `22`, JsonNumber, `items`, 1, `value`)}},
