@@ -45,6 +45,8 @@ func (l *sliceLexer) takeString() error {
 	}
 
 	var previous int
+	consecutiveSlashes := 0
+
 looper:
 	for {
 		if int(curPos) >= inputLen {
@@ -53,10 +55,17 @@ looper:
 		}
 		cur := int(l.input[curPos])
 		curPos++
+		if previous == '\\' {
+			consecutiveSlashes++
+		}
+
 		if cur == '"' {
-			if previous == noValue || previous != '\\' {
+			if previous != '\\' || consecutiveSlashes % 2 == 0 {
 				break looper
+			}  else {
+				l.take()
 			}
+
 		}
 
 		previous = cur
