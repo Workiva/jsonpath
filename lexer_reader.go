@@ -46,6 +46,7 @@ func (l *readerLexer) takeString() error {
 	}
 
 	var previous byte
+	consecutiveSlashes := 0
 looper:
 	for {
 		curByte, err := l.bufInput.ReadByte()
@@ -53,9 +54,11 @@ looper:
 			return errors.New("Unexpected EOF in string")
 		}
 		l.lexeme.WriteByte(curByte)
-
+		if curByte == '\\' {
+			consecutiveSlashes++
+		}
 		if curByte == '"' {
-			if previous != '\\' {
+			if previous != '\\' || consecutiveSlashes % 2 == 0 {
 				break looper
 			}
 		}
