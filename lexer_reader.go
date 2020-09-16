@@ -58,9 +58,13 @@ looper:
 			consecutiveSlashes++
 		}
 		if curByte == '"' {
-			if previous != '\\' || consecutiveSlashes % 2 == 0 {
+			if previous != '\\' || (previous == '\\' && consecutiveSlashes % 2 == 0) {
 				break looper
 			}
+		}
+
+		if curByte != '\\' {
+			consecutiveSlashes = 0
 		}
 
 		previous = curByte

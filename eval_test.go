@@ -16,7 +16,8 @@ type test struct {
 
 var tests = []test{
 	test{`key selection with back to back quotes`, `{"aKey":"32\""}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `"32\""`, JsonString, `aKey`)}},
-	test{`key selection with double backslashes`, `{"bkey": "31\\", "aKey":"32"}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `"32"`, JsonString, `aKey`)}},
+	test{`key selection with double backslashes at the end`, `{"bkey": "31\\", "aKey":"32"}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `"32"`, JsonString, `aKey`)}},
+	test{`key selection with non-consecutive backslashes`, `{"@odata.etag":"W/\"5748193\"", "aKey":"32"}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `"32"`, JsonString, `aKey`)}},
 	test{`key selection`, `{"aKey":32}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `32`, JsonNumber, `aKey`)}},
 	test{`nested key selection`, `{"aKey":{"bKey":32}}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `{"bKey":32}`, JsonObject, `aKey`)}},
 	test{`empty array`, `{"aKey":[]}`, `$.aKey+`, []Result{newResult(`$.aKey+`, `[]`, JsonArray, `aKey`)}},

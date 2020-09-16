@@ -55,17 +55,18 @@ looper:
 		}
 		cur := int(l.input[curPos])
 		curPos++
-		if previous == '\\' {
+		if cur == '\\' {
 			consecutiveSlashes++
 		}
 
 		if cur == '"' {
-			if previous != '\\' || consecutiveSlashes % 2 == 0 {
+			if previous != '\\' || (previous == '\\' && consecutiveSlashes % 2 == 0) {
 				break looper
-			}  else {
-				l.take()
 			}
+		}
 
+		if cur != '\\' {
+			consecutiveSlashes = 0
 		}
 
 		previous = cur
