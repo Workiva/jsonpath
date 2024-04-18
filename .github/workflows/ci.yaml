@@ -14,12 +14,11 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
           go-version: 1.18
-      - name: Test Setup
-        run: |
-          make test
+      - name: Run Tests
+        run: make test
